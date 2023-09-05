@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Here is a list of my favorite artists:</h1>
+    {% for artist in artist_list %}
+    <div>
+        <a href="/caamp">{{ artist }}</a>
+    </div>
+    {% endfor %}
+{% endblock %}
