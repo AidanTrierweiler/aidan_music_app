@@ -2,5 +2,31 @@
 
 {% block content %}
     <h1>Create New artist</h1>
-    <p>Page under construction</p>
+
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.artist_name.label }}<br>
+            {{ form.artist_name(size=32) }}<br>
+            {% for error in form.artist_name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.hometown.label }}<br>
+            {{ form.hometown(size=32) }}<br>
+            {% for error in form.hometown.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.Description.label }}<br>
+            {{ form.Description(size=128) }}<br>
+            {% for error in form.Description.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+
 {% endblock %}
