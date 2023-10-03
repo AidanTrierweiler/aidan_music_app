@@ -1,8 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Create New artist</h1>
 
+    {% if name %}
+
+        <p>{{ name }}</p>
+        <p>{{ hometown }}</p>
+        <p>{{ description }}</p>
+    {% else %}
+        <h1>Create New artist</h1>
     <form action="" method="post" novalidate>
         {{ form.hidden_tag() }}
         <p>
@@ -28,5 +34,5 @@
         </p>
         <p>{{ form.submit() }}</p>
     </form>
-
+    {% endif %}
 {% endblock %}

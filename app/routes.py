@@ -17,7 +17,7 @@ def artist():
 
 @app.route('/caamp')
 def artist_page():
-    return render_template("caamp.html", title="Caamp",)
+    return render_template("caamp.html", title="Caamp", )
 
 
 @app.route('/new_artist', methods=['GET', 'POST'])
@@ -26,7 +26,7 @@ def new_artist():
     if form.validate_on_submit():
         flash('New artist has been created'.format(
             form.artist_name.data, form.hometown.data, form.Description.data))
-        return redirect(url_for('new_artist'))
-    return render_template('new_artist.html', title='New Artist', form=form)
-
-
+        return render_template('new_artist.html', title='New Artist', form=form, name=form.artist_name.data,
+                               description=form.Description.data, hometown=form.hometown.data)
+    return render_template('new_artist.html', title='New Artist', form=form, name=form.artist_name.data,
+                           description=form.Description.data, hometown=form.hometown.data)
