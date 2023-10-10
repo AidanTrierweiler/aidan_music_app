@@ -11,9 +11,8 @@
         <div>
             local_music:
             <a href="{{ url_for('index') }}" }}>Home</a>
-            <a href="{{ url_for("artist") }}" }}>Artists</a>
+            <a href="{{ url_for("artists") }}" }}>Artists</a>
             <a href="{{ url_for("new_artist") }}" }}>New Artists</a>
-
         </div>
         <hr>
         {% with messages = get_flashed_messages() %}

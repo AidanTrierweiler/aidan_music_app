@@ -1,10 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Here is a list of my favorite artists:</h1>
-    {% for artist in artist_list %}
-    <div>
-        <a href="/caamp">{{ artist }}</a>
-    </div>
+    <h2>Artist Page</h2>
+    <p>{{ artist.name }}</p>
+    <p>{{ artist.hometown }}</p>
+    <p>{{ artist.description }}</p>
+
+    <h2>Events:</h2>
+    <ol>
+    {% for a2es in artist.a2es %}
+        <li>{{ a2es.event.name }}</li>
     {% endfor %}
+    </ol>
+
 {% endblock %}
