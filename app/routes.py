@@ -41,7 +41,6 @@ def new_artist():
         if existing_artist:
             flash(f"Artist '{artist_name}' already exists in the database.")
         else:
-            # Create a new artist if it doesn't exist
             new_artist = Artist(name=artist_name, description=artist_description, hometown=artist_hometown)
             db.session.add(new_artist)
             db.session.commit()
