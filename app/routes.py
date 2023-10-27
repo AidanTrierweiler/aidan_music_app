@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash, current_app, request
 from app.models import Artist, Event, Venue, ArtistToEvent, User
 from app import app, db
-from app.forms import NewArtistForm, LoginForm, RegistrationForm, EditProfileForm
+from app.forms import NewArtistForm, LoginForm, RegistrationForm, EditProfileForm, NewVenueForm, NewEventForm
 from datetime import datetime
 from flask_login import login_user, logout_user, current_user, login_required
 from werkzeug.urls import url_parse
@@ -54,6 +54,80 @@ def new_artist():
     return render_template('new_artist.html', form=form)
 
 
+@app.route('/new_venue', methods=['GET', 'POST'])
+def new_venue():
+    form = NewVenueForm()
+
+    if form.validate_on_submit():
+        venue_name = form.venue_name.data
+        venue_location = form.venue_location.data
+
+        existing_venue = Venue.query.filter_by(name=venue_name).first()
+
+        if existing_venue:
+            flash(f"Venue '{venue_name}' already exists in the database.")
+        else:
+            new_venue = Venue(name=venue_name, location=venue_location)
+            db.session.add(new_venue)
+            db.session.commit()
+            flash(f"Venue '{venue_name}' has been created.")
+
+        return redirect(url_for('artists'))
+
+    return render_template('new_venue.html', form=form)
+
+
+# @app.route('/new_event', methods=['GET', 'POST'])
+# def new_event():
+#     form = NewEventForm()
+#
+#     form.venue.choices = [(v.id, v.name) for v in Venue.query.all()]
+#
+#     form.artists.choices = [(a.id, a.name) for a in Artist.query.all()]
+#
+#     if request.method == 'POST' and form.validate_on_submit():
+#
+#         event = Event(
+#             name=form.name.data,
+#             date=form.date.data,
+#             venue_id=form.venue.data,
+#             a2es=[Artist.query.get(artist_id) for artist_id in form.artists.data])
+#         db.session.add(event)
+#         db.session.commit()
+#         return "Event added successfully!"
+#
+#     return render_template('new_event.html', form=form)
+
+@app.route('/new_event', methods=['GET', 'POST'])
+def new_event():
+    form = NewEventForm()
+
+    form.venue.choices = [(v.id, v.name) for v in Venue.query.all()]
+    form.artists.choices = [(a.id, a.name) for a in Artist.query.all()]
+
+    if request.method == 'POST' and form.validate_on_submit():
+        event = Event(
+            name=form.name.data,
+            date=form.date.data,
+            venue_id=form.venue.data,
+        )
+        db.session.add(event)
+
+        for artist_id in form.artists.data:
+            artist = Artist.query.get(artist_id)
+            if artist:
+                event.a2es.append(ArtistToEvent(artist=artist))
+            else:
+                flash("Invalid artist selected")
+
+        db.session.commit()
+        flash(f"Event '{event.name}' has been created.")
+        return redirect(url_for('artists'))
+
+    return render_template('new_event.html', form=form)
+
+
+
 @app.route('/reset_db')
 def reset_db():
     flash("Resetting database: deleting old data and repopulating with dummy data")
@@ -78,13 +152,13 @@ def reset_db():
     db.session.add_all([v1, v2, v3])
     db.session.commit()
 
-    e1 = Event(name="Ozzfest", date="12/4/2023", venue=v2)
-    e2 = Event(name="Knotfest", date="12/10/2023", venue=v1)
-    e3 = Event(name="Rolling loud", date="12/25/2023", venue=v2)
-    e4 = Event(name="Coachella", date="1/4/2024", venue=v3)
-    e5 = Event(name="Extravaganza", date="1/10/2024", venue=v1)
-    e6 = Event(name="Bayfest", date="2/4/2024", venue=v1)
-    e7 = Event(name="Warped Tour", date="4/5/2024", venue=v3)
+    e1 = Event(name="Ozzfest", date=datetime(2024, 3, 3, 12, 0, 0), venue=v2)
+    e2 = Event(name="Knotfest", date=datetime(2024, 3, 3, 10, 0, 0), venue=v1)
+    e3 = Event(name="Rolling loud", date=datetime(2024, 3, 20, 0, 0, 0), venue=v2)
+    e4 = Event(name="Coachella", date=datetime(2024, 4, 2, 10, 0, 0), venue=v3)
+    e5 = Event(name="Extravaganza", date=datetime(2024, 4, 15, 0, 0, 0), venue=v1)
+    e6 = Event(name="Bayfest", date=datetime(2024, 5, 13, 10, 0, 0), venue=v1)
+    e7 = Event(name="Warped Tour", date=datetime(2024, 5, 22, 0, 0, 0), venue=v3)
     db.session.add_all([e1, e2, e3, e4, e5, e6, e7])
     db.session.commit()
 
@@ -159,8 +233,8 @@ def register():
     return render_template('register.html', title='Register', form=form)
 
 
-@app.route('/user/<username>')
-@login_required
-def user(username):
-    user = User.query.filter_by(username=username).first_or_404()
-    return render_template('user.html', user=user)
+# @app.route('/user/<username>')
+# @login_required
+# def user(username):
+#     user = User.query.filter_by(username=username).first_or_404()
+#     return render_template('user.html', user=user)

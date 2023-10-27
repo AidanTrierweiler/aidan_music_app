@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% if name %}
+
+        <p>{{ name }}</p>
+        <p>{{ location }}</p>
+    {% else %}
+        <h1>Create New Venue</h1>
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.venue_name.label }}<br>
+            {{ form.venue_name(size=32) }}<br>
+            {% for error in form.venue_name.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.venue_location.label }}<br>
+            {{ form.venue_location(size=32) }}<br>
+            {% for error in form.venue_location.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    {% endif %}
+{% endblock %}

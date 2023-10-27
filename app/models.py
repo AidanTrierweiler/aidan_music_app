@@ -19,7 +19,7 @@ class Artist(db.Model):
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(64), index=True, unique=True, nullable=False)
-    date = db.Column(db.String(64), nullable=False)
+    date = db.Column(db.DateTime, nullable=False)
     venue_id = db.Column(db.Integer, db.ForeignKey('venue.id'))
     a2es = db.relationship('ArtistToEvent', backref='event', lazy='dynamic')
 

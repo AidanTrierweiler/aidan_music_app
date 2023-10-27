@@ -9,7 +9,7 @@
     <h2>Events:</h2>
     <ol>
     {% for a2es in artist.a2es %}
-        <li>{{ a2es.event.name }}</li>
+        <li>{{ artist.name }} is playing in the {{ a2es.event.name }} event at {{ a2es.event.date.strftime('%B %d, %Y') }}</li>
     {% endfor %}
     </ol>
 
