@@ -1,16 +1,20 @@
 {% extends "base.html" %}
 
-{% block content %}
-    <h2>Artist Page</h2>
-    <p>{{ artist.name }}</p>
-    <p>{{ artist.hometown }}</p>
-    <p>{{ artist.description }}</p>
+{% block app_content %}
+    <div class="container">
+    <h2 class="display-4">Artist Page</h2>
+    <p class="lead">{{ artist.name }}</p>
+    <p class="lead">{{ artist.hometown }}</p>
+    <p class="lead">{{ artist.description }}</p>
+    </div>
 
-    <h2>Events:</h2>
+    <div class="container">
+    <h2 class="display-4">Events:</h2>
     <ol>
     {% for a2es in artist.a2es %}
-        <li>{{ artist.name }} is playing in the {{ a2es.event.name }} event at {{ a2es.event.date.strftime('%B %d, %Y') }}</li>
+        <li><p class="lead">{{ artist.name }} is playing in the {{ a2es.event.name }} event at {{ a2es.event.date.strftime('%B %d, %Y') }}</p></li>
     {% endfor %}
     </ol>
+    </div>
 
 {% endblock %}

@@ -1,38 +1,77 @@
 {% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
-{% block content %}
-
+{% block app_content %}
+    <div class="container"></div>
     {% if name %}
-
-        <p>{{ name }}</p>
-        <p>{{ hometown }}</p>
-        <p>{{ description }}</p>
+        <p class="lead">{{ name }}</p>
+        <p class="lead">{{ hometown }}</p>
+        <p class="lead">{{ description }}</p>
+        </div>
     {% else %}
-        <h1>Create New artist</h1>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.artist_name.label }}<br>
-            {{ form.artist_name(size=32) }}<br>
-            {% for error in form.artist_name.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.hometown.label }}<br>
-            {{ form.hometown(size=32) }}<br>
-            {% for error in form.hometown.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.Description.label }}<br>
-            {{ form.Description(size=128) }}<br>
-            {% for error in form.Description.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+        <div class="container">
+        <h1 class="display-4">Create New Artist</h1>
+        <form method="post" novalidate>
+            {{ form.hidden_tag() }}
+            {{ wtf.quick_form(form, button_map={"submit": "btn btn-secondary"}) }}
+        </form>
+        </div>
     {% endif %}
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{#{% extends "base.html" %}#}
+{##}
+{#{% block content %}#}
+{##}
+{#    {% if name %}#}
+{##}
+{#        <p>{{ name }}</p>#}
+{#        <p>{{ hometown }}</p>#}
+{#        <p>{{ description }}</p>#}
+{#    {% else %}#}
+{#        <h1>Create New artist</h1>#}
+{#    <form action="" method="post" novalidate>#}
+{#        {{ form.hidden_tag() }}#}
+{#        <p>#}
+{#            {{ form.artist_name.label }}<br>#}
+{#            {{ form.artist_name(size=32) }}<br>#}
+{#            {% for error in form.artist_name.errors %}#}
+{#            <span style="color: red;">[{{ error }}]</span>#}
+{#            {% endfor %}#}
+{#        </p>#}
+{#        <p>#}
+{#            {{ form.hometown.label }}<br>#}
+{#            {{ form.hometown(size=32) }}<br>#}
+{#            {% for error in form.hometown.errors %}#}
+{#            <span style="color: red;">[{{ error }}]</span>#}
+{#            {% endfor %}#}
+{#        </p>#}
+{#        <p>#}
+{#            {{ form.Description.label }}<br>#}
+{#            {{ form.Description(size=128) }}<br>#}
+{#            {% for error in form.Description.errors %}#}
+{#            <span style="color: red;">[{{ error }}]</span>#}
+{#            {% endfor %}#}
+{#        </p>#}
+{#        <p>{{ form.submit() }}</p>#}
+{#    </form>#}
+{#    {% endif %}#}
+{#{% endblock %}#}

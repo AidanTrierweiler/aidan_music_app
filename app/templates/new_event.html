@@ -1,46 +1,21 @@
 {% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
-{% block content %}
-
+{% block app_content %}
+    <div class="container"></div>
     {% if name %}
-
-        <p>{{ name }}</p>
-        <p>{{ date }}</p>
-        <p>{{ venue_id }}</p>
-        <p>{{ artists }}</p>
+        <p class="lead">{{ name }}</p>
+        <p class="lead">{{ date }}</p>
+        <p class="lead">{{ venue_id }}</p>
+        <p class="lead">{{ artists }}</p>
+        </div>
     {% else %}
-        <h1>Create New Event</h1>
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.name.label }}<br>
-            {{ form.name(size=32) }}<br>
-            {% for error in form.name.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.date.label }}<br>
-            {{ form.date(size=32) }}<br>
-            {% for error in form.date.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.venue.label }}<br>
-            {{ form.venue(class="form-control", size=1) }}<br>
-            {% for error in form.venue.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-    <p>
-            {{ form.artists.label }}<br>
-            {{ form.artists(size=5) }}<br>
-            {% for error in form.artists.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+        <div class="container">
+        <h1 class="display-4">Create New Event</h1>
+        <form method="post" novalidate>
+            {{ form.hidden_tag() }}
+            {{ wtf.quick_form(form, button_map={"submit": "btn btn-secondary"}) }}
+        </form>
+        </div>
     {% endif %}
 {% endblock %}

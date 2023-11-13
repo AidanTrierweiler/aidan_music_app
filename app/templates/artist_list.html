@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <h1>Here is a list of artists</h1>
+    <div class="container">
+    <h1 class="display-4">Here is a list of artists</h1>
+    </div>
     {% for artist in artist_list %}
-    <div>
-        <a href="{{ url_for('artist_name', name=artist.name) }}">{{ artist.name }}</a>
+    <div class="container">
+        <a class="lead text-muted"  href="{{ url_for('artist_name', name=artist.name) }}">{{ artist.name }}</a>
     </div>
     {% endfor %}
 {% endblock %}
